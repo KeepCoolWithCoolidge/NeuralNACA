@@ -84,6 +84,15 @@ def test_generate_dataset_uses_and_validates_the_cache(tmp_path, monkeypatch):
     assert calls == [16, 16, 16, 16]
 
 
+def test_text_files_hash_the_same_with_crlf_line_endings(tmp_path):
+    (tmp_path / "a.json").write_bytes(b'{"x": 1}\n{"y": 2}\n')
+    (tmp_path / "b.json").write_bytes(b'{"x": 1}\r\n{"y": 2}\r\n')
+    assert sha256(tmp_path / "a.json") == sha256(tmp_path / "b.json")
+    (tmp_path / "a.bin").write_bytes(b"1\n2\n")
+    (tmp_path / "b.bin").write_bytes(b"1\r\n2\r\n")
+    assert sha256(tmp_path / "a.bin") != sha256(tmp_path / "b.bin")          # binary data is never normalised
+
+
 def test_hashes_and_manifest(tmp_path):
     (tmp_path / "a.txt").write_bytes(b"abc")
     assert sha256(tmp_path / "a.txt") == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"

@@ -43,7 +43,11 @@ def test_datasets_follow_their_declared_design(seed):
     for split, kind, s in (("train", "sobol", seed), ("test", "random", seed + 1000)):
         ds = XfoilDataset.load(LAYOUT.data / r["datasets"][split]["file"])
         assert ds.meta["design"]["kind"] == kind and ds.meta["design"]["seed"] == s
-        np.testing.assert_array_equal(ds.points, sample_points(len(ds), kind, s))
+        # Re = 10**x goes through the platform's libm, which may differ in the last bit between operating systems
+        # and library versions; every other column, and the design itself, must match exactly.
+        want = sample_points(len(ds), kind, s)
+        np.testing.assert_array_equal(ds.points[:, [0, 1, 2, 4]], want[:, [0, 1, 2, 4]])
+        np.testing.assert_allclose(ds.points[:, 3], want[:, 3], rtol=1e-12, atol=0)
         assert DEFAULT_DOMAIN.contains(*ds.points.T).all()
         assert ds.converged.mean() > 0.9
         assert ds.meta["xfoil"]["panels"] == 279 and ds.meta["xfoil"]["n_crit"] == 9.0

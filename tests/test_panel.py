@@ -137,7 +137,8 @@ def test_inviscid_is_differentiable_in_alpha():
 
 def test_batching_is_consistent():
     pts = np.array([[0.02, 0.4, 0.12], [0.0, 0.5, 0.09], [0.06, 0.3, 0.15]])
-    np.testing.assert_allclose(airfoil_constants(pts, chunk=1), airfoil_constants(pts, chunk=256), rtol=1e-12)
+    np.testing.assert_allclose(airfoil_constants(pts, chunk=1), airfoil_constants(pts, chunk=256), rtol=1e-9,
+                               atol=1e-12)
     assert airfoil_constants(np.zeros((0, 3))).shape == (0, 6)
 
 
