@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests scripts examples
+      - run: mypy
+
+  tests:
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "${{ matrix.python }}"}
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[test,neuralfoil,plot]"
+      - name: Fast suite (unit, property, physics validation, shipped-results integrity)
+        run: pytest -m "not slow and not xfoil" --cov=neuralnaca --cov-report=term-missing
+
+  slow-and-reproduce:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[test,neuralfoil,plot]"
+      - run: pytest -m "slow and not xfoil"
+      - name: Reproduction level 0 (shipped weights + shipped data -> published numbers)
+        run: neuralnaca reproduce --level 0 --json reproduce-level0.json
+      - uses: actions/upload-artifact@v4
+        with: {name: reproduce-level0, path: reproduce-level0.json}
+
+  xfoil:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: sudo apt-get update && sudo apt-get install -y gfortran cmake
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[test,neuralfoil]"
+      - run: bash scripts/install_xfoil_python.sh
+      - run: neuralnaca xfoil-check --backend module
+      - run: pytest -m xfoil
+
+  package:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install build && python -m build
+      - name: Install the wheel in a clean environment and smoke-test it
+        run: |
+          python -m venv /tmp/clean && /tmp/clean/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
+          /tmp/clean/bin/pip install dist/*.whl
+          cd /tmp && /tmp/clean/bin/python -c "import neuralnaca; print(neuralnaca.get_aero('2412', alpha=4.0, Re=1e6))"
+          /tmp/clean/bin/neuralnaca predict 0012 --re 1e6 --alpha 0 4 --step 2
