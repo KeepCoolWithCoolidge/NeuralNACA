@@ -1,0 +1,2389 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Physics-embedded neural surrogate for NACA 4-digit airfoil polars, benchmarked against NeuralFoil">
+      
+      
+      
+      
+        <link rel="prev" href="../benchmark/">
+      
+      
+        <link rel="next" href="../limitations/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Results - NeuralNACA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#results" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="NeuralNACA" class="md-header__button md-logo" aria-label="NeuralNACA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NeuralNACA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Results
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/KeepCoolWithCoolidge/NeuralNACA" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NeuralNACA
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="NeuralNACA" class="md-nav__button md-logo" aria-label="NeuralNACA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    NeuralNACA
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/KeepCoolWithCoolidge/NeuralNACA" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NeuralNACA
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/predictions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Predictions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training your own model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/xfoil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running XFOIL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Science
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Science
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../method/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmark protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#polars-of-unseen-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Polars of unseen sections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error distributions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-efficiency-and-ablation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data efficiency and ablation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headline-all-replications-pooled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Headline: all replications pooled
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per replication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#against-every-neuralfoil-model-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Against every NeuralFoil model size
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-the-errors-are-all-replications-pooled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where the errors are (all replications pooled)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimisation-variance-same-data-different-training-seeds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimisation variance (same data, different training seeds)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ablation-what-each-physics-ingredient-contributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ablation: what each physics ingredient contributes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data efficiency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sensitivity-to-the-definition-of-the-xfoil-ground-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensitivity to the definition of the XFOIL ground truth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowing-when-not-to-trust-a-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowing when not to trust a prediction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-per-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost per prediction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reproducing the results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command line
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#polars-of-unseen-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Polars of unseen sections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error distributions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-efficiency-and-ablation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data efficiency and ablation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headline-all-replications-pooled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Headline: all replications pooled
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per replication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#against-every-neuralfoil-model-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Against every NeuralFoil model size
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-the-errors-are-all-replications-pooled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where the errors are (all replications pooled)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimisation-variance-same-data-different-training-seeds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimisation variance (same data, different training seeds)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ablation-what-each-physics-ingredient-contributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ablation: what each physics ingredient contributes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data efficiency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sensitivity-to-the-definition-of-the-xfoil-ground-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensitivity to the definition of the XFOIL ground truth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowing-when-not-to-trust-a-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowing when not to trust a prediction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-per-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost per prediction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h1>
+<p>All tables on this page are generated from the files in <code>benchmarks/results/</code> (<code>neuralnaca report</code>), and all figures
+with <code>neuralnaca figures</code>. The protocol is described in <a href="../benchmark/">Benchmark protocol</a>. The ratios in the prose
+below are copied from those tables, and a test checks that they agree.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Lower mean error than NeuralFoil-xxxlarge for NACA sections, in every replication.</strong> Pooled over five
+   replications and 13,933 held-out test points, the MAE ratios NeuralNACA / NeuralFoil are 0.62 [0.58, 0.65] for
+   <span class="arithmatex">\(C_L\)</span>, 0.65 [0.62, 0.68] for <span class="arithmatex">\(\ln C_D\)</span> and 0.60 [0.57, 0.64] for <span class="arithmatex">\(C_M\)</span>. The interval excludes 1 for all three
+   outputs in each replication, including the two generated after the code freeze, and against every NeuralFoil
+   model size.</li>
+<li><strong>The typical error is about 2.3-3x smaller</strong> (medians), <strong>but the largest errors are not smaller.</strong> The RMSE
+   ratios are 0.97 [0.82, 1.15] (<span class="arithmatex">\(C_L\)</span>), 0.88 [0.80, 0.97] (<span class="arithmatex">\(\ln C_D\)</span>) and 0.99 [0.82, 1.21] (<span class="arithmatex">\(C_M\)</span>). Rare large
+   errors in a sparsely sampled corner (high camber, low Re, negative incidence) offset the typical-case advantage
+   for <span class="arithmatex">\(C_L\)</span> and <span class="arithmatex">\(C_M\)</span>. See <a href="../limitations/#sparse-corners-with-sharp-physics-rare-but-large-errors">Limitations</a>.</li>
+<li><strong>The main reason NeuralNACA wins is geometry.</strong> NeuralFoil cannot represent a NACA section exactly; it analyses
+   an 8+8-weight Kulfan fit of it. That fit is geometrically excellent, yet XFOIL's answer for the fitted shape differs
+   from that for the exact section by about as much as NeuralFoil's entire error.<ul>
+<li>Scored against XFOIL on the fitted shape (what NeuralFoil actually analyses), NeuralFoil is <em>more</em> accurate than
+  NeuralNACA is against XFOIL on the exact shape (ground-truth study below).</li>
+<li>Even a plain MLP without any physics, trained on 4,096 exact-geometry XFOIL runs, beats NeuralFoil (ablation).</li>
+<li>NeuralNACA is therefore the better tool <em>for NACA 4-digit sections</em>, because it models them exactly and
+  specialises. It is not a better XFOIL emulator in general.</li>
+</ul>
+</li>
+<li><strong>The ground-truth protocol hardly matters; the geometry does.</strong> Against XFOIL run with NeuralFoil's own
+   warm-started sweep protocol on the exact geometry, the ratios are 0.61 [0.54, 0.67], 0.67 [0.61, 0.73] and
+   0.62 [0.56, 0.68]. Against XFOIL on NeuralFoil's Kulfan geometry, NeuralFoil wins (e.g. 1.92 [1.73, 2.10] for
+   <span class="arithmatex">\(C_L\)</span>, cold start).</li>
+<li><strong>Of the physics ingredients, the panel-method backbone is what matters.</strong> Removing it increases the MAE by
+   21-41 %.
+   Mirror symmetry and the drag prior change the MAE by at most 4 %; they guarantee consistency rather than accuracy.
+   Autograd PINN residuals do not help and make training 4.5 times slower.</li>
+<li><strong>Break-even with NeuralFoil is at about 2,000 XFOIL runs</strong> (0.026 % of NeuralFoil's). With 8,192 runs (one
+   replication) the error is about half of NeuralFoil's.</li>
+<li><strong>Variability comes from the data, not the training.</strong> Retraining on the same data with other seeds changes the
+   MAE by about 1-2 % (standard deviation); across replications the ratio has a standard deviation of 0.03-0.06.</li>
+<li><strong>The warning signals are informative but imperfect.</strong> The support flag catches 36-47 % of the conditions where
+   XFOIL fails and wrongly flags under 0.5 % of converged ones. The ensemble spread has a rank correlation of
+   0.58-0.69 with the actual error.</li>
+<li><strong>Speed is comparable to NeuralFoil</strong> and about 40-1,400 times faster than XFOIL, depending on the batch shape.</li>
+</ol>
+<h2 id="polars-of-unseen-sections">Polars of unseen sections<a class="headerlink" href="#polars-of-unseen-sections" title="Permanent link">&para;</a></h2>
+<p>None of these sections is in any training set. Open circles are XFOIL; missing circles mean XFOIL did not converge.</p>
+<p><img alt="Polars at Re = 1e6" src="../assets/polars_re1e06.png" /></p>
+<p>At low Reynolds number the polars become strongly non-linear (laminar separation). Both surrogates follow XFOIL;
+past stall of NACA 0012 they diverge from each other where XFOIL still converges.</p>
+<p><img alt="Polars at Re = 2e5" src="../assets/polars_re2e05.png" /></p>
+<h2 id="error-distributions">Error distributions<a class="headerlink" href="#error-distributions" title="Permanent link">&para;</a></h2>
+<p>The cumulative distributions show where the advantage lies. NeuralNACA's curve is to the left (smaller errors) for
+most points, and the two curves meet in the tail.</p>
+<p><img alt="Error distributions" src="../assets/error_cdf.png" /></p>
+<h2 id="data-efficiency-and-ablation">Data efficiency and ablation<a class="headerlink" href="#data-efficiency-and-ablation" title="Permanent link">&para;</a></h2>
+<p><img alt="Data efficiency" src="../assets/data_efficiency.png" /></p>
+<p><img alt="Ablation" src="../assets/ablation.png" /></p>
+<!-- generated by `neuralnaca report`; do not edit by hand -->
+
+<h2 id="headline-all-replications-pooled">Headline: all replications pooled<a class="headerlink" href="#headline-all-replications-pooled" title="Permanent link">&para;</a></h2>
+<p>5 independent replications (each with its own Sobol training set of 4,096 XFOIL runs = 0.052 % of NeuralFoil's 7,913,292, and its own i.i.d. test set of unseen airfoils); 13,933 XFOIL-converged test points in total. Ratios are NeuralNACA / NeuralFoil-xxxlarge with 95 % paired-bootstrap intervals (&lt; 1: NeuralNACA more accurate).</p>
+<table>
+<thead>
+<tr>
+<th>output</th>
+<th>NeuralNACA MAE</th>
+<th>NeuralFoil MAE</th>
+<th>MAE ratio</th>
+<th>RMSE ratio</th>
+<th>NeuralNACA median</th>
+<th>NeuralFoil median</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C<sub>L</sub></td>
+<td>0.0031</td>
+<td>0.0050</td>
+<td>0.62 [0.58, 0.65]</td>
+<td>0.97 [0.82, 1.15]</td>
+<td>0.00080</td>
+<td>0.00236</td>
+</tr>
+<tr>
+<td>ln C<sub>D</sub></td>
+<td>0.0092</td>
+<td>0.0142</td>
+<td>0.65 [0.62, 0.68]</td>
+<td>0.88 [0.80, 0.97]</td>
+<td>0.00306</td>
+<td>0.00717</td>
+</tr>
+<tr>
+<td>C<sub>M</sub></td>
+<td>0.00052</td>
+<td>0.00086</td>
+<td>0.60 [0.57, 0.64]</td>
+<td>0.99 [0.82, 1.21]</td>
+<td>0.000152</td>
+<td>0.000444</td>
+</tr>
+</tbody>
+</table>
+<h2 id="per-replication">Per replication<a class="headerlink" href="#per-replication" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>seed</th>
+<th>test pts</th>
+<th>train conv.</th>
+<th>C<sub>L</sub> ratio</th>
+<th>ln C<sub>D</sub> ratio</th>
+<th>C<sub>M</sub> ratio</th>
+<th>RMSE ratios (C<sub>L</sub> / ln C<sub>D</sub> / C<sub>M</sub>)</th>
+<th>Wilcoxon p (max)</th>
+<th>reflection test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2,790</td>
+<td>3,808</td>
+<td>0.60 [0.54, 0.66]</td>
+<td>0.67 [0.61, 0.74]</td>
+<td>0.62 [0.56, 0.68]</td>
+<td>0.90 / 0.92 / 0.90</td>
+<td>3e-94</td>
+<td>pass (1e-06)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2,776</td>
+<td>3,833</td>
+<td>0.61 [0.54, 0.67]</td>
+<td>0.60 [0.55, 0.66]</td>
+<td>0.61 [0.55, 0.67]</td>
+<td>0.78 / 0.69 / 0.89</td>
+<td>1e-104</td>
+<td>pass (1e-06)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2,783</td>
+<td>3,777</td>
+<td>0.61 [0.54, 0.68]</td>
+<td>0.66 [0.59, 0.75]</td>
+<td>0.57 [0.51, 0.63]</td>
+<td>0.92 / 1.01 / 0.82</td>
+<td>5e-106</td>
+<td>pass (1e-06)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2,801</td>
+<td>3,807</td>
+<td>0.67 [0.59, 0.77]</td>
+<td>0.67 [0.61, 0.73]</td>
+<td>0.69 [0.60, 0.81]</td>
+<td>1.17 / 0.92 / 1.53</td>
+<td>2e-104</td>
+<td>pass (5e-07)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2,783</td>
+<td>3,824</td>
+<td>0.59 [0.51, 0.69]</td>
+<td>0.65 [0.58, 0.72]</td>
+<td>0.53 [0.48, 0.58]</td>
+<td>1.13 / 0.86 / 0.70</td>
+<td>9e-98</td>
+<td>pass (8e-07)</td>
+</tr>
+</tbody>
+</table>
+<p>Standard deviation of the MAE ratio across replications: C<sub>L</sub> 0.033, ln C<sub>D</sub> 0.028, C<sub>M</sub> 0.062.</p>
+<h2 id="against-every-neuralfoil-model-size">Against every NeuralFoil model size<a class="headerlink" href="#against-every-neuralfoil-model-size" title="Permanent link">&para;</a></h2>
+<p>Mean over replications of the MAE. The last columns give NeuralNACA's MAE ratio against that size.</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>C<sub>L</sub> MAE</th>
+<th>ln C<sub>D</sub> MAE</th>
+<th>C<sub>M</sub> MAE</th>
+<th>ratio C<sub>L</sub></th>
+<th>ratio ln C<sub>D</sub></th>
+<th>ratio C<sub>M</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NeuralNACA</strong> (this work)</td>
+<td>0.0031</td>
+<td>0.0092</td>
+<td>0.00052</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>NeuralFoil xxsmall</td>
+<td>0.0205</td>
+<td>0.0748</td>
+<td>0.00380</td>
+<td>0.15</td>
+<td>0.12</td>
+<td>0.14</td>
+</tr>
+<tr>
+<td>NeuralFoil xsmall</td>
+<td>0.0139</td>
+<td>0.0487</td>
+<td>0.00262</td>
+<td>0.22</td>
+<td>0.19</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>NeuralFoil small</td>
+<td>0.0124</td>
+<td>0.0375</td>
+<td>0.00236</td>
+<td>0.25</td>
+<td>0.25</td>
+<td>0.22</td>
+</tr>
+<tr>
+<td>NeuralFoil medium</td>
+<td>0.0090</td>
+<td>0.0252</td>
+<td>0.00168</td>
+<td>0.34</td>
+<td>0.37</td>
+<td>0.31</td>
+</tr>
+<tr>
+<td>NeuralFoil large</td>
+<td>0.0067</td>
+<td>0.0187</td>
+<td>0.00126</td>
+<td>0.46</td>
+<td>0.50</td>
+<td>0.41</td>
+</tr>
+<tr>
+<td>NeuralFoil xlarge</td>
+<td>0.0056</td>
+<td>0.0167</td>
+<td>0.00102</td>
+<td>0.55</td>
+<td>0.55</td>
+<td>0.51</td>
+</tr>
+<tr>
+<td>NeuralFoil xxlarge</td>
+<td>0.0049</td>
+<td>0.0148</td>
+<td>0.00088</td>
+<td>0.63</td>
+<td>0.62</td>
+<td>0.59</td>
+</tr>
+<tr>
+<td>NeuralFoil xxxlarge</td>
+<td>0.0050</td>
+<td>0.0142</td>
+<td>0.00086</td>
+<td>0.62</td>
+<td>0.65</td>
+<td>0.60</td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-the-errors-are-all-replications-pooled">Where the errors are (all replications pooled)<a class="headerlink" href="#where-the-errors-are-all-replications-pooled" title="Permanent link">&para;</a></h2>
+<p>MAE of NeuralNACA vs NeuralFoil-xxxlarge per band.</p>
+<table>
+<thead>
+<tr>
+<th>band</th>
+<th>points</th>
+<th>C<sub>L</sub></th>
+<th>ln C<sub>D</sub></th>
+<th>C<sub>M</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&alpha; [deg] -5 to 0</td>
+<td>3,475</td>
+<td>0.0029 vs 0.0031</td>
+<td>0.0102 vs 0.0106</td>
+<td>0.00061 vs 0.00061</td>
+</tr>
+<tr>
+<td>&alpha; [deg] 0 to 5</td>
+<td>3,594</td>
+<td>0.0024 vs 0.0033</td>
+<td>0.0092 vs 0.0110</td>
+<td>0.00046 vs 0.00061</td>
+</tr>
+<tr>
+<td>&alpha; [deg] 5 to 10</td>
+<td>3,600</td>
+<td>0.0024 vs 0.0040</td>
+<td>0.0071 vs 0.0129</td>
+<td>0.00042 vs 0.00080</td>
+</tr>
+<tr>
+<td>&alpha; [deg] 10 to 15</td>
+<td>3,264</td>
+<td>0.0048 vs 0.0101</td>
+<td>0.0107 vs 0.0231</td>
+<td>0.00059 vs 0.00147</td>
+</tr>
+<tr>
+<td>Re 1e+05 to 3e+05</td>
+<td>3,168</td>
+<td>0.0074 vs 0.0068</td>
+<td>0.0155 vs 0.0146</td>
+<td>0.00120 vs 0.00113</td>
+</tr>
+<tr>
+<td>Re 3e+05 to 1e+06</td>
+<td>3,500</td>
+<td>0.0030 vs 0.0054</td>
+<td>0.0101 vs 0.0156</td>
+<td>0.00053 vs 0.00086</td>
+</tr>
+<tr>
+<td>Re 1e+06 to 3e+06</td>
+<td>3,521</td>
+<td>0.0015 vs 0.0043</td>
+<td>0.0070 vs 0.0151</td>
+<td>0.00025 vs 0.00076</td>
+</tr>
+<tr>
+<td>Re 3e+06 to 1e+07</td>
+<td>3,744</td>
+<td>0.0009 vs 0.0038</td>
+<td>0.0052 vs 0.0117</td>
+<td>0.00018 vs 0.00074</td>
+</tr>
+</tbody>
+</table>
+<h2 id="optimisation-variance-same-data-different-training-seeds">Optimisation variance (same data, different training seeds)<a class="headerlink" href="#optimisation-variance-same-data-different-training-seeds" title="Permanent link">&para;</a></h2>
+<p>Replication 0's training set, retrained with 5 training seeds (0, 101, 102, 103, 104).</p>
+<table>
+<thead>
+<tr>
+<th>output</th>
+<th>MAE mean</th>
+<th>MAE sd</th>
+<th>MAE ratio vs NeuralFoil: mean</th>
+<th>sd</th>
+<th>worst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C<sub>L</sub></td>
+<td>0.0031</td>
+<td>0.00003</td>
+<td>0.603</td>
+<td>0.005</td>
+<td>0.612</td>
+</tr>
+<tr>
+<td>ln C<sub>D</sub></td>
+<td>0.0097</td>
+<td>0.00014</td>
+<td>0.677</td>
+<td>0.010</td>
+<td>0.688</td>
+</tr>
+<tr>
+<td>C<sub>M</sub></td>
+<td>0.00054</td>
+<td>0.000012</td>
+<td>0.611</td>
+<td>0.013</td>
+<td>0.632</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ablation-what-each-physics-ingredient-contributes">Ablation: what each physics ingredient contributes<a class="headerlink" href="#ablation-what-each-physics-ingredient-contributes" title="Permanent link">&para;</a></h2>
+<p>Same training data, same recipe, same test points; MAE averaged over the replications listed. The change is relative to the full model on the same replications (positive = worse without the ingredient).</p>
+<table>
+<thead>
+<tr>
+<th>variant</th>
+<th>replications</th>
+<th>C<sub>L</sub> MAE</th>
+<th>ln C<sub>D</sub> MAE</th>
+<th>C<sub>M</sub> MAE</th>
+<th>vs full</th>
+<th>beats NeuralFoil (all 3, CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>physics alone (panel method + drag prior, no network)</td>
+<td>0, 1, 2</td>
+<td>0.1866</td>
+<td>0.4562</td>
+<td>0.03163</td>
+<td>62x / 49x / 62x</td>
+<td>0/3</td>
+</tr>
+<tr>
+<td>plain MLP (no physics)</td>
+<td>0, 1, 2</td>
+<td>0.0037</td>
+<td>0.0116</td>
+<td>0.00066</td>
+<td>+23% / +25% / +29%</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>without panel-method backbone</td>
+<td>0, 1, 2</td>
+<td>0.0038</td>
+<td>0.0113</td>
+<td>0.00072</td>
+<td>+24% / +21% / +41%</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>without mirror symmetry</td>
+<td>0, 1, 2</td>
+<td>0.0030</td>
+<td>0.0097</td>
+<td>0.00052</td>
+<td>+0% / +4% / +0%</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>without flat-plate drag prior</td>
+<td>0, 1, 2</td>
+<td>0.0030</td>
+<td>0.0096</td>
+<td>0.00051</td>
+<td>+0% / +4% / +0%</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>full model</strong></td>
+<td>0, 1, 2</td>
+<td>0.0030</td>
+<td>0.0093</td>
+<td>0.00051</td>
+<td>-</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>full + autograd PINN residuals</td>
+<td>0</td>
+<td>0.0032</td>
+<td>0.0098</td>
+<td>0.00055</td>
+<td>+2% / +2% / +1%</td>
+<td>1/1</td>
+</tr>
+</tbody>
+</table>
+<p>Training time on the reference machine (replication 0): 4.0 min for the full model, 18.0 min with the autograd residuals (4.5x).</p>
+<h2 id="data-efficiency">Data efficiency<a class="headerlink" href="#data-efficiency" title="Permanent link">&para;</a></h2>
+<p>Same recipe trained on the first <em>n</em> points of each replication's Sobol training sequence. Ratios are NeuralNACA / NeuralFoil-xxxlarge MAE (mean over the replications available for that <em>n</em>).</p>
+<table>
+<thead>
+<tr>
+<th>XFOIL runs</th>
+<th>share of NeuralFoil's</th>
+<th>replications</th>
+<th>C<sub>L</sub> MAE</th>
+<th>ln C<sub>D</sub> MAE</th>
+<th>C<sub>M</sub> MAE</th>
+<th>ratio C<sub>L</sub></th>
+<th>ratio ln C<sub>D</sub></th>
+<th>ratio C<sub>M</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>512</td>
+<td>0.006 %</td>
+<td>3</td>
+<td>0.0116</td>
+<td>0.0326</td>
+<td>0.00186</td>
+<td>2.32</td>
+<td>2.27</td>
+<td>2.16</td>
+</tr>
+<tr>
+<td>1,024</td>
+<td>0.013 %</td>
+<td>3</td>
+<td>0.0074</td>
+<td>0.0216</td>
+<td>0.00118</td>
+<td>1.47</td>
+<td>1.50</td>
+<td>1.38</td>
+</tr>
+<tr>
+<td>2,048</td>
+<td>0.026 %</td>
+<td>3</td>
+<td>0.0047</td>
+<td>0.0140</td>
+<td>0.00076</td>
+<td>0.93</td>
+<td>0.97</td>
+<td>0.89</td>
+</tr>
+<tr>
+<td>4,096</td>
+<td>0.052 %</td>
+<td>3</td>
+<td>0.0030</td>
+<td>0.0093</td>
+<td>0.00051</td>
+<td>0.60</td>
+<td>0.65</td>
+<td>0.60</td>
+</tr>
+<tr>
+<td>8,192</td>
+<td>0.104 %</td>
+<td>1</td>
+<td>0.0024</td>
+<td>0.0073</td>
+<td>0.00041</td>
+<td>0.47</td>
+<td>0.51</td>
+<td>0.46</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sensitivity-to-the-definition-of-the-xfoil-ground-truth">Sensitivity to the definition of the XFOIL ground truth<a class="headerlink" href="#sensitivity-to-the-definition-of-the-xfoil-ground-truth" title="Permanent link">&para;</a></h2>
+<p>Replication 0's test points re-solved under 5 definitions; scored on the 2,581 points that converged under all of them. <em>naca</em> = exact NACA coordinates; <em>kulfan</em> = the 8+8-weight Kulfan fit that NeuralFoil analyses internally (in NeuralFoil's normalised frame); <em>naca-normalized</em> = exact coordinates in that same frame (control). NeuralNACA was trained on <em>cold/naca</em> labels and predicts XFOIL for the exact section; NeuralFoil's training labels were <em>nf-sweep/kulfan</em>.</p>
+<table>
+<thead>
+<tr>
+<th>ground truth</th>
+<th>NeuralNACA MAE (C<sub>L</sub> / ln C<sub>D</sub> / C<sub>M</sub>)</th>
+<th>NeuralFoil MAE</th>
+<th>ratio C<sub>L</sub></th>
+<th>ratio ln C<sub>D</sub></th>
+<th>ratio C<sub>M</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cold/naca</td>
+<td>0.0027 / 0.0082 / 0.00048</td>
+<td>0.0047 / 0.0129 / 0.00081</td>
+<td>0.58 [0.52, 0.64]</td>
+<td>0.64 [0.58, 0.69]</td>
+<td>0.59 [0.54, 0.65]</td>
+</tr>
+<tr>
+<td>cold/naca-normalized</td>
+<td>0.0030 / 0.0086 / 0.00074</td>
+<td>0.0050 / 0.0132 / 0.00083</td>
+<td>0.61 [0.55, 0.68]</td>
+<td>0.65 [0.59, 0.71]</td>
+<td>0.89 [0.84, 0.95]</td>
+</tr>
+<tr>
+<td>cold/kulfan</td>
+<td>0.0046 / 0.0137 / 0.00082</td>
+<td>0.0024 / 0.0065 / 0.00042</td>
+<td>1.92 [1.73, 2.10]</td>
+<td>2.11 [1.94, 2.29]</td>
+<td>1.93 [1.77, 2.11]</td>
+</tr>
+<tr>
+<td>nf-sweep/naca</td>
+<td>0.0032 / 0.0097 / 0.00054</td>
+<td>0.0052 / 0.0144 / 0.00087</td>
+<td>0.61 [0.54, 0.67]</td>
+<td>0.67 [0.61, 0.73]</td>
+<td>0.62 [0.56, 0.68]</td>
+</tr>
+<tr>
+<td>nf-sweep/kulfan</td>
+<td>0.0052 / 0.0148 / 0.00085</td>
+<td>0.0029 / 0.0077 / 0.00045</td>
+<td>1.78 [1.60, 2.02]</td>
+<td>1.93 [1.76, 2.14]</td>
+<td>1.87 [1.73, 2.05]</td>
+</tr>
+</tbody>
+</table>
+<p>XFOIL against itself under different definitions (same points):</p>
+<table>
+<thead>
+<tr>
+<th>pair</th>
+<th>C<sub>L</sub> MAE</th>
+<th>ln C<sub>D</sub> MAE</th>
+<th>C<sub>M</sub> MAE</th>
+<th>C<sub>L</sub> median</th>
+<th>share with &#124;&Delta;C<sub>L</sub>&#124; &gt; 0.01</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cold/naca vs cold/naca-normalized</td>
+<td>0.0006</td>
+<td>0.0007</td>
+<td>0.00038</td>
+<td>0.00005</td>
+<td>0.1 %</td>
+</tr>
+<tr>
+<td>cold/naca vs cold/kulfan</td>
+<td>0.0036</td>
+<td>0.0105</td>
+<td>0.00060</td>
+<td>0.00152</td>
+<td>7.3 %</td>
+</tr>
+<tr>
+<td>cold/naca vs nf-sweep/naca</td>
+<td>0.0009</td>
+<td>0.0025</td>
+<td>0.00011</td>
+<td>0.00000</td>
+<td>0.3 %</td>
+</tr>
+<tr>
+<td>cold/naca vs nf-sweep/kulfan</td>
+<td>0.0044</td>
+<td>0.0124</td>
+<td>0.00068</td>
+<td>0.00153</td>
+<td>7.6 %</td>
+</tr>
+<tr>
+<td>cold/naca-normalized vs cold/kulfan</td>
+<td>0.0039</td>
+<td>0.0108</td>
+<td>0.00064</td>
+<td>0.00166</td>
+<td>7.6 %</td>
+</tr>
+<tr>
+<td>cold/naca-normalized vs nf-sweep/naca</td>
+<td>0.0015</td>
+<td>0.0032</td>
+<td>0.00049</td>
+<td>0.00006</td>
+<td>0.4 %</td>
+</tr>
+<tr>
+<td>cold/naca-normalized vs nf-sweep/kulfan</td>
+<td>0.0047</td>
+<td>0.0128</td>
+<td>0.00071</td>
+<td>0.00166</td>
+<td>7.9 %</td>
+</tr>
+<tr>
+<td>cold/kulfan vs nf-sweep/naca</td>
+<td>0.0044</td>
+<td>0.0129</td>
+<td>0.00070</td>
+<td>0.00152</td>
+<td>7.5 %</td>
+</tr>
+<tr>
+<td>cold/kulfan vs nf-sweep/kulfan</td>
+<td>0.0009</td>
+<td>0.0022</td>
+<td>0.00008</td>
+<td>0.00000</td>
+<td>0.5 %</td>
+</tr>
+<tr>
+<td>nf-sweep/naca vs nf-sweep/kulfan</td>
+<td>0.0043</td>
+<td>0.0127</td>
+<td>0.00067</td>
+<td>0.00153</td>
+<td>7.6 %</td>
+</tr>
+</tbody>
+</table>
+<h2 id="knowing-when-not-to-trust-a-prediction">Knowing when not to trust a prediction<a class="headerlink" href="#knowing-when-not-to-trust-a-prediction" title="Permanent link">&para;</a></h2>
+<p>Built from each replication's <em>training</em> set only and evaluated on its held-out test set (see the limitations page).</p>
+<table>
+<thead>
+<tr>
+<th>seed</th>
+<th>AUC for XFOIL non-convergence</th>
+<th>non-converged test pts flagged</th>
+<th>converged test pts flagged</th>
+<th>unsupported share of domain</th>
+<th>MAE ratio on supported pts (C<sub>L</sub> / ln C<sub>D</sub> / C<sub>M</sub>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.813</td>
+<td>41 % of 210</td>
+<td>0.07 %</td>
+<td>3.3 %</td>
+<td>0.60 / 0.66 / 0.61</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.823</td>
+<td>36 % of 224</td>
+<td>0.25 %</td>
+<td>2.9 %</td>
+<td>0.60 / 0.60 / 0.59</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.810</td>
+<td>47 % of 217</td>
+<td>0.40 %</td>
+<td>3.5 %</td>
+<td>0.59 / 0.64 / 0.56</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.818</td>
+<td>38 % of 199</td>
+<td>0.29 %</td>
+<td>2.9 %</td>
+<td>0.65 / 0.66 / 0.68</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.796</td>
+<td>36 % of 217</td>
+<td>0.11 %</td>
+<td>3.0 %</td>
+<td>0.59 / 0.64 / 0.52</td>
+</tr>
+</tbody>
+</table>
+<p>Ensemble spread as an error indicator (converged test points):</p>
+<table>
+<thead>
+<tr>
+<th>seed</th>
+<th>Spearman(std, &#124;error&#124;) C<sub>L</sub> / ln C<sub>D</sub> / C<sub>M</sub></th>
+<th>of the 20 worst C<sub>L</sub> errors, how many have C<sub>L</sub>_std in the top 5 %</th>
+<th>median &#124;error&#124; / std (C<sub>L</sub>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.66 / 0.58 / 0.67</td>
+<td>15 / 20</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.69 / 0.60 / 0.66</td>
+<td>15 / 20</td>
+<td>0.86</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.68 / 0.60 / 0.66</td>
+<td>18 / 20</td>
+<td>0.92</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.67 / 0.62 / 0.65</td>
+<td>19 / 20</td>
+<td>0.84</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.67 / 0.60 / 0.65</td>
+<td>18 / 20</td>
+<td>0.82</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cost-per-prediction">Cost per prediction<a class="headerlink" href="#cost-per-prediction" title="Permanent link">&para;</a></h2>
+<p>Wall-clock milliseconds per condition on Intel(R) Xeon(R) Processor @ 2.10GHz (2 CPUs, 2 PyTorch threads), best of three runs. XFOIL: python module, one worker process, cold start, including process start-up.</p>
+<table>
+<thead>
+<tr>
+<th>tool</th>
+<th>single (new airfoil each call)</th>
+<th>polar (41 angles, one airfoil)</th>
+<th>batch (1000 airfoils)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NeuralNACA</td>
+<td>5.79</td>
+<td>0.15</td>
+<td>3.01</td>
+</tr>
+<tr>
+<td>NeuralFoil xxxlarge</td>
+<td>4.06</td>
+<td>0.24</td>
+<td>4.10</td>
+</tr>
+<tr>
+<td>XFOIL (module, 1 process)</td>
+<td>218.17</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reference-environment">Reference environment<a class="headerlink" href="#reference-environment" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>component</th>
+<th>version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>neuralnaca</td>
+<td>1.0.0</td>
+</tr>
+<tr>
+<td>python</td>
+<td>3.13.16</td>
+</tr>
+<tr>
+<td>platform</td>
+<td>Linux-6.18.44-fc-v139-x86_64-with-glibc2.39</td>
+</tr>
+<tr>
+<td>numpy</td>
+<td>2.5.3</td>
+</tr>
+<tr>
+<td>scipy</td>
+<td>1.18.1</td>
+</tr>
+<tr>
+<td>torch</td>
+<td>2.14.1+cu130</td>
+</tr>
+<tr>
+<td>torch_threads</td>
+<td>2</td>
+</tr>
+<tr>
+<td>neuralfoil</td>
+<td>0.3.3</td>
+</tr>
+<tr>
+<td>aerosandbox</td>
+<td>4.2.10</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      MIT License - NeuralNACA contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
