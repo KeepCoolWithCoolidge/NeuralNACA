@@ -418,7 +418,7 @@ def run_protocol_study(seed: int = 0, layout: Layout = Layout(), spec: Benchmark
             truths[name] = generate_dataset(spec.n_test, "random", seed + 1000, run_cfg, workers, path=path,
                                             label=f"truth {name}")
         assert np.array_equal(truths[name].points, te0.points)
-    common = np.logical_and.reduce([d.converged for d in truths.values()])
+    common = np.stack([d.converged for d in truths.values()]).all(axis=0)
     pts = te0.points[common]
     net, _ = load_model(layout.models / ref["model"]["file"])
     pred = predict_tensors(net, to_tensors(pts, airfoil_constants(pts[:, :3]))).mean(0)

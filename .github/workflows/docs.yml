@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch: 
 
 permissions:
   contents: write
@@ -18,5 +19,5 @@ jobs:
       - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
       - run: pip install -e ".[docs]"
       - run: mkdocs build --strict
-      - if: github.event_name == 'push'
+      - if: github.event_name != 'pull_request'
         run: mkdocs gh-deploy --force
