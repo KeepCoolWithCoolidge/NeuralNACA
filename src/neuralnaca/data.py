@@ -114,7 +114,7 @@ def generate_dataset(n: int, kind: str, seed: int, cfg: XfoilConfig, workers: in
         rec = ds.meta.get("xfoil", {})
         defaults = {"protocol": "cold", "geometry": "naca", "panels": 279, "n_crit": 9.0, "max_iter": 100}
         same_cfg = all(rec.get(k, d) == getattr(cfg, k) for k, d in defaults.items())
-        if ds.points.shape == pts.shape and np.array_equal(ds.points, pts) and same_cfg:
+        if ds.points.shape == pts.shape and np.allclose(ds.points, pts, rtol=1e-12, atol=0) and same_cfg:
             log.info("[%s] using cached XFOIL results %s", label, path)
             return ds
         log.info("[%s] cache %s does not match the requested design/configuration; recomputing", label, path)
@@ -154,7 +154,15 @@ def split_train_test_overlap(train: XfoilDataset, test: XfoilDataset) -> int:
     return sum(tuple(np.round(r[:3], 9)) in keys for r in test.points[test.converged])
 
 
+_TEXT_SUFFIXES = frozenset({".json", ".txt", ".md"})
+
+
 def sha256(path: str | Path) -> str:
+    """SHA-256 of a file. Text files (.json, .txt, .md) are hashed with CRLF read as LF, so that a Windows checkout
+    with ``core.autocrlf`` yields the same digest as the repository; binary files are hashed byte for byte."""
+    path = Path(path)
+    if path.suffix.lower() in _TEXT_SUFFIXES:
+        return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
     h = hashlib.sha256()
     with open(path, "rb") as fh:
         for block in iter(lambda: fh.read(1 << 20), b""):

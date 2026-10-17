@@ -66,7 +66,8 @@ as its pass criterion.
 The test suite (`pytest -m benchmark`) checks all of the following, so an inconsistency cannot go unnoticed:
 
 * every file matches the manifest;
-* every data set reproduces its declared design exactly;
+* every data set reproduces its declared design (to the last bit, except the Reynolds number, which is allowed a
+  relative 10⁻¹² because `10**x` is not bit-identical across operating systems);
 * no test airfoil appears in its replication's training set;
 * every result file matches its model and data hashes;
 * the claim holds in every replication and pooled;

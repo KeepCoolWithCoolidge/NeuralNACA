@@ -343,12 +343,12 @@ def run_curve(seed: int, sizes: Sequence[int] = (512, 1024, 2048, 4096), layout:
     for n in sizes:
         if n <= spec.n_train:
             sub, src = tr.subset(slice(0, n)), ptr
-            if not np.array_equal(sub.points, sample_points(n, "sobol", seed)):
+            if not np.allclose(sub.points, sample_points(n, "sobol", seed), rtol=1e-12, atol=0):
                 raise RuntimeError("Sobol prefix property violated")
         else:
             big = layout.dataset("train", n, seed, spec.xfoil)
             pts = sample_points(n, "sobol", seed)
-            if not np.array_equal(pts[: spec.n_train], tr.points):
+            if not np.allclose(pts[: spec.n_train], tr.points, rtol=1e-12, atol=0):
                 raise RuntimeError("Sobol prefix property violated")
             if big.exists():
                 sub = XfoilDataset.load(big)
