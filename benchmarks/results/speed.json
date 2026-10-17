@@ -1,0 +1,33 @@
+{
+ "kind": "speed",
+ "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+ "cpus": 2,
+ "torch_threads": 2,
+ "seconds_per_condition": {
+  "NeuralNACA": {
+   "single (new airfoil each call)": 0.005792244280019077,
+   "polar (41 angles, one airfoil)": 0.00015235519511894914,
+   "batch (1000 airfoils)": 0.0030095464780006296
+  },
+  "NeuralFoil xxxlarge": {
+   "single (new airfoil each call)": 0.004055762640018656,
+   "polar (41 angles, one airfoil)": 0.00023880929270157273,
+   "batch (1000 airfoils)": 0.00410257334400012
+  },
+  "XFOIL (module, 1 process)": {
+   "single (new airfoil each call)": 0.218165880675042
+  }
+ },
+ "environment": {
+  "neuralnaca": "1.0.0",
+  "python": "3.13.16",
+  "platform": "Linux-6.18.44-fc-v139-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "torch": "2.14.1+cu130",
+  "torch_threads": 2,
+  "neuralfoil": "0.3.3",
+  "aerosandbox": "4.2.10"
+ }
+}

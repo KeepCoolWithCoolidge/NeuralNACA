@@ -1,0 +1,115 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "neuralnaca"
+dynamic = ["version"]
+description = "Physics-embedded neural surrogate for NACA 4-digit airfoil polars, trained on a small XFOIL budget and benchmarked against NeuralFoil."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "NeuralNACA contributors" }]
+keywords = ["aerodynamics", "airfoil", "NACA", "XFOIL", "surrogate model", "physics-informed machine learning", "panel method"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Typing :: Typed",
+]
+dependencies = [
+    "numpy>=1.23",
+    "scipy>=1.9",
+    "torch>=2.0",
+]
+
+[project.optional-dependencies]
+neuralfoil = ["neuralfoil>=0.3"]
+plot = ["matplotlib>=3.6"]
+xfoil = []  # XFOIL itself cannot be pip-installed portably; see docs/installation.md and scripts/
+test = ["pytest>=7.4", "hypothesis>=6.80", "pytest-cov>=4.1"]
+docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9.5", "mkdocstrings[python]>=0.24"]
+dev = ["neuralnaca[neuralfoil,plot,test,docs]", "ruff>=0.5", "mypy>=1.8", "build>=1.0"]
+
+[project.scripts]
+neuralnaca = "neuralnaca.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/KeepCoolWithCoolidge/NeuralNACA"
+Documentation = "https://keepcoolwithcoolidge.github.io/NeuralNACA"
+Issues = "https://github.com/KeepCoolWithCoolidge/NeuralNACA/issues"
+
+[tool.hatch.version]
+path = "src/neuralnaca/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/neuralnaca"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/neuralnaca", "tests", "README.md", "LICENSE", "CHANGELOG.md", "CITATION.cff", "pyproject.toml"]
+
+# ------------------------------------------------------------------------------------------------ pytest
+[tool.pytest.ini_options]
+minversion = "7.4"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+markers = [
+    "slow: trains networks or runs many solves (> ~20 s); deselect with -m 'not slow'",
+    "xfoil: needs a working XFOIL (python module or executable)",
+    "neuralfoil: needs the neuralfoil package",
+    "benchmark: needs the benchmark files shipped in the repository (benchmarks/, data/)",
+]
+filterwarnings = [
+    "error::neuralnaca.DomainWarning",
+    "ignore::DeprecationWarning:aerosandbox.*",
+    "ignore::DeprecationWarning:casadi.*",
+]
+
+[tool.coverage.run]
+source = ["neuralnaca"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError", "if __name__ == .__main__.:"]
+
+# ------------------------------------------------------------------------------------------------ ruff
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY", "RUF", "C4", "SIM", "PT"]
+ignore = [
+    "E741",    # short physics variable names (l, I) are fine here
+    "RUF001", "RUF002", "RUF003",  # greek letters in docstrings/comments are intentional
+    "SIM108",
+    "B905",    # zip() over arrays whose lengths are aligned by construction
+]
+
+[tool.ruff.lint.flake8-bugbear]
+# frozen dataclasses / immutable values used as defaults
+extend-immutable-calls = [
+    "neuralnaca.benchmark.Layout", "neuralnaca.benchmark.BenchmarkSpec", "neuralnaca.training.TrainConfig",
+    "neuralnaca.xfoil.XfoilConfig", "neuralnaca.domain.Domain", "pathlib.Path", "Layout", "BenchmarkSpec",
+    "TrainConfig", "XfoilConfig", "Path",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PT011", "PT018"]
+
+# ------------------------------------------------------------------------------------------------ mypy
+[tool.mypy]
+python_version = "3.10"
+files = ["src/neuralnaca"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = true
+no_implicit_optional = true

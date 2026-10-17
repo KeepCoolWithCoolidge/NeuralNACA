@@ -1,0 +1,239 @@
+{
+ "kind": "support",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "runs": {
+  "0": {
+   "ensemble_spread": {
+    "CL": {
+     "spearman_std_vs_abs_error": 0.6604523476594585,
+     "worst20_in_top5pct_std": 15,
+     "median_abs_error_over_std": 0.8516304964585845
+    },
+    "lnCD": {
+     "spearman_std_vs_abs_error": 0.5825950069176521,
+     "worst20_in_top5pct_std": 14,
+     "median_abs_error_over_std": 0.8503041568752103
+    },
+    "CM": {
+     "spearman_std_vs_abs_error": 0.6732667422426082,
+     "worst20_in_top5pct_std": 16,
+     "median_abs_error_over_std": 0.8430602059728336
+    }
+   },
+   "auc_nonconvergence": 0.8125362689878819,
+   "flagged_converged_pct": 0.07168458781362007,
+   "flagged_nonconverged_pct": 41.42857142857143,
+   "n_nonconverged": 210,
+   "unsupported_volume_pct": 3.312,
+   "max_CD_in_volume": 5.2681169509887695,
+   "mae_supported": {
+    "model": {
+     "CL": 0.0030931265779142567,
+     "lnCD": 0.009542526211007953,
+     "CM": 0.0005371786317260157
+    },
+    "neuralfoil": {
+     "CL": 0.005151004365314502,
+     "lnCD": 0.014384680952463947,
+     "CM": 0.0008777090342981566
+    }
+   },
+   "mae_ratio_supported": {
+    "CL": 0.6004899935132167,
+    "lnCD": 0.6633811512777013,
+    "CM": 0.6120235872421667
+   },
+   "cd_max": 0.15641115605831146
+  },
+  "1": {
+   "ensemble_spread": {
+    "CL": {
+     "spearman_std_vs_abs_error": 0.6909235442650113,
+     "worst20_in_top5pct_std": 15,
+     "median_abs_error_over_std": 0.8550559357372105
+    },
+    "lnCD": {
+     "spearman_std_vs_abs_error": 0.6003452070871457,
+     "worst20_in_top5pct_std": 13,
+     "median_abs_error_over_std": 0.8953354607801501
+    },
+    "CM": {
+     "spearman_std_vs_abs_error": 0.6637061539392219,
+     "worst20_in_top5pct_std": 16,
+     "median_abs_error_over_std": 0.8322369369607603
+    }
+   },
+   "auc_nonconvergence": 0.8232570630918074,
+   "flagged_converged_pct": 0.2521613832853026,
+   "flagged_nonconverged_pct": 35.714285714285715,
+   "n_nonconverged": 224,
+   "unsupported_volume_pct": 2.88,
+   "max_CD_in_volume": 1.106913447380066,
+   "mae_supported": {
+    "model": {
+     "CL": 0.002943552251361679,
+     "lnCD": 0.00843277498160252,
+     "CM": 0.0004975616034374214
+    },
+    "neuralfoil": {
+     "CL": 0.004931519676277791,
+     "lnCD": 0.014132416568611476,
+     "CM": 0.0008376358974429804
+    }
+   },
+   "mae_ratio_supported": {
+    "CL": 0.5968854317911617,
+    "lnCD": 0.5966973122156595,
+    "CM": 0.5940070201818105
+   },
+   "cd_max": 0.16498978435993195
+  },
+  "2": {
+   "ensemble_spread": {
+    "CL": {
+     "spearman_std_vs_abs_error": 0.6822290240618185,
+     "worst20_in_top5pct_std": 18,
+     "median_abs_error_over_std": 0.9199983349949323
+    },
+    "lnCD": {
+     "spearman_std_vs_abs_error": 0.5974729126411835,
+     "worst20_in_top5pct_std": 15,
+     "median_abs_error_over_std": 0.9808481970119085
+    },
+    "CM": {
+     "spearman_std_vs_abs_error": 0.6616683416313508,
+     "worst20_in_top5pct_std": 17,
+     "median_abs_error_over_std": 0.8985766277597118
+    }
+   },
+   "auc_nonconvergence": 0.8096855331331935,
+   "flagged_converged_pct": 0.3952569169960474,
+   "flagged_nonconverged_pct": 47.465437788018434,
+   "n_nonconverged": 217,
+   "unsupported_volume_pct": 3.4680000000000004,
+   "max_CD_in_volume": 6.3352789878845215,
+   "mae_supported": {
+    "model": {
+     "CL": 0.002763899640145901,
+     "lnCD": 0.008760847845767736,
+     "CM": 0.00046072511942478933
+    },
+    "neuralfoil": {
+     "CL": 0.004716227727043473,
+     "lnCD": 0.013792821658288582,
+     "CM": 0.0008281519011601058
+    }
+   },
+   "mae_ratio_supported": {
+    "CL": 0.5860403271659965,
+    "lnCD": 0.6351744452885781,
+    "CM": 0.5563292419897709
+   },
+   "cd_max": 0.12088171392679214
+  },
+  "3": {
+   "ensemble_spread": {
+    "CL": {
+     "spearman_std_vs_abs_error": 0.6730594130308689,
+     "worst20_in_top5pct_std": 19,
+     "median_abs_error_over_std": 0.8416114447447413
+    },
+    "lnCD": {
+     "spearman_std_vs_abs_error": 0.6200394475206545,
+     "worst20_in_top5pct_std": 16,
+     "median_abs_error_over_std": 0.8310674565787904
+    },
+    "CM": {
+     "spearman_std_vs_abs_error": 0.6523131772957653,
+     "worst20_in_top5pct_std": 18,
+     "median_abs_error_over_std": 0.8139574715744889
+    }
+   },
+   "auc_nonconvergence": 0.8178261891391984,
+   "flagged_converged_pct": 0.28561228132809713,
+   "flagged_nonconverged_pct": 37.68844221105528,
+   "n_nonconverged": 199,
+   "unsupported_volume_pct": 2.858,
+   "max_CD_in_volume": 1.175363302230835,
+   "mae_supported": {
+    "model": {
+     "CL": 0.003223772940484197,
+     "lnCD": 0.009243344973013521,
+     "CM": 0.0005863277939864733
+    },
+    "neuralfoil": {
+     "CL": 0.004957562874282369,
+     "lnCD": 0.013966724677956888,
+     "CM": 0.0008640710491843724
+    }
+   },
+   "mae_ratio_supported": {
+    "CL": 0.6502737377689544,
+    "lnCD": 0.6618119270011755,
+    "CM": 0.6785643316483397
+   },
+   "cd_max": 0.17534193396568298
+  },
+  "4": {
+   "ensemble_spread": {
+    "CL": {
+     "spearman_std_vs_abs_error": 0.6662082266436514,
+     "worst20_in_top5pct_std": 18,
+     "median_abs_error_over_std": 0.8214725701000798
+    },
+    "lnCD": {
+     "spearman_std_vs_abs_error": 0.5967123951881469,
+     "worst20_in_top5pct_std": 18,
+     "median_abs_error_over_std": 0.9006204468902503
+    },
+    "CM": {
+     "spearman_std_vs_abs_error": 0.649172338730608,
+     "worst20_in_top5pct_std": 16,
+     "median_abs_error_over_std": 0.8022465245711151
+    }
+   },
+   "auc_nonconvergence": 0.7956205467361913,
+   "flagged_converged_pct": 0.10779734099892202,
+   "flagged_nonconverged_pct": 35.944700460829495,
+   "n_nonconverged": 217,
+   "unsupported_volume_pct": 3.024,
+   "max_CD_in_volume": 0.4100814759731293,
+   "mae_supported": {
+    "model": {
+     "CL": 0.0029550707038481913,
+     "lnCD": 0.00896133469406326,
+     "CM": 0.00045093899138856495
+    },
+    "neuralfoil": {
+     "CL": 0.00501037427424821,
+     "lnCD": 0.013897430013898272,
+     "CM": 0.0008606901895883203
+    }
+   },
+   "mae_ratio_supported": {
+    "CL": 0.5897904112745329,
+    "lnCD": 0.6448195590912408,
+    "CM": 0.5239271887184576
+   },
+   "cd_max": 0.17888736724853516
+  }
+ },
+ "environment": {
+  "neuralnaca": "1.0.0",
+  "python": "3.13.16",
+  "platform": "Linux-6.18.44-fc-v139-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "torch": "2.14.1+cu130",
+  "torch_threads": 2,
+  "neuralfoil": "0.3.3",
+  "aerosandbox": "4.2.10"
+ }
+}

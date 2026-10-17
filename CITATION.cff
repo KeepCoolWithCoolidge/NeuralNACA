@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use NeuralNACA, please cite it as below."
+title: "NeuralNACA: a physics-embedded neural surrogate for NACA 4-digit airfoil polars"
+type: software
+authors:
+  - name: "NeuralNACA contributors"
+version: 1.0.0
+date-released: 2026-10-16
+license: MIT
+repository-code: "https://github.com/KeepCoolWithCoolidge/NeuralNACA"
+keywords: [aerodynamics, airfoil, XFOIL, NACA, surrogate model, physics-informed machine learning]
+references:
+  - type: article
+    title: "NeuralFoil: An Airfoil Aerodynamics Analysis Tool Using Physics-Informed Machine Learning"
+    authors:
+      - family-names: Sharpe
+        given-names: Peter
+      - family-names: Hansman
+        given-names: R. John
+    identifiers:
+      - type: other
+        value: "arXiv:2503.16323"
+  - type: software
+    title: "XFOIL"
+    authors:
+      - family-names: Drela
+        given-names: Mark
+    version: "6.99"
+    url: "https://web.mit.edu/drela/Public/web/xfoil/"

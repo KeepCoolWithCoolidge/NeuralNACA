@@ -1,0 +1,92 @@
+site_name: NeuralNACA
+site_description: Physics-embedded neural surrogate for NACA 4-digit airfoil polars, benchmarked against NeuralFoil
+repo_url: https://github.com/KeepCoolWithCoolidge/NeuralNACA
+repo_name: NeuralNACA
+edit_uri: edit/main/docs/
+copyright: MIT License - NeuralNACA contributors
+
+# generated tables are included into pages with pymdownx.snippets, not built as pages of their own
+exclude_docs: |
+  results/
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: blue
+      toggle: {icon: material/brightness-7, name: Switch to dark mode}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      accent: blue
+      toggle: {icon: material/brightness-4, name: Switch to light mode}
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - Installation: installation.md
+      - Quick start: quickstart.md
+  - User guide:
+      - Predictions: guide/predictions.md
+      - Training your own model: guide/training.md
+      - Running XFOIL: guide/xfoil.md
+  - Science:
+      - Method: method.md
+      - Benchmark protocol: benchmark.md
+      - Results: results.md
+      - Limitations: limitations.md
+      - Reproducing the results: reproducibility.md
+      - FAQ: faq.md
+  - Reference:
+      - Python API: reference/api.md
+      - Command line: reference/cli.md
+      - File formats: reference/formats.md
+  - Project:
+      - Changelog: changelog.md
+      - Contributing: contributing.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: numpy
+            show_source: false
+            show_root_heading: true
+            members_order: source
+            heading_level: 3
+            filters: ["!^_"]
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
