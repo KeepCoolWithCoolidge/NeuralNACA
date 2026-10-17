@@ -69,13 +69,13 @@ def format_reproduction(rep: dict) -> str:
 
 # ------------------------------------------------------------------------------------------------ markdown report
 def _load(path: Path):
-    return json.loads(path.read_text()) if path.exists() else None
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
 
 
 def _main_section(res_dir: Path) -> list[str]:
     from .benchmark import summarize_mains
 
-    mains = {int(p.stem.split("_s")[1]): json.loads(p.read_text())
+    mains = {int(p.stem.split("_s")[1]): json.loads(p.read_text(encoding="utf-8"))
              for p in sorted(res_dir.glob("main_s*.json")) if p.stem.count("_") == 1}
     if not mains:
         return []
@@ -178,7 +178,7 @@ ABLATION_LABEL = {
 def _ablation_section(res_dir: Path) -> list[str]:
     runs: dict[str, dict[int, dict]] = {}
     for p in sorted(res_dir.glob("ablation_s*.json")):
-        a = json.loads(p.read_text())
+        a = json.loads(p.read_text(encoding="utf-8"))
         for k, r in a["runs"].items():
             runs.setdefault(k, {})[a["seed"]] = r
     if not runs:
@@ -225,7 +225,7 @@ def _ablation_section(res_dir: Path) -> list[str]:
 def _curve_section(res_dir: Path) -> list[str]:
     rows: dict[int, list[dict]] = {}
     for p in sorted(res_dir.glob("curve_s*.json")):
-        for k, r in json.loads(p.read_text())["runs"].items():
+        for k, r in json.loads(p.read_text(encoding="utf-8"))["runs"].items():
             rows.setdefault(int(k), []).append(r)
     if not rows:
         return []
@@ -350,6 +350,6 @@ def write_report(root: Path, out: Path) -> Path:
     """Write the full tables to ``out`` and the headline table to ``headline.md`` next to it."""
     out = Path(out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(build_report(root))
-    (out.parent / "headline.md").write_text(build_headline(root))
+    out.write_text(build_report(root), encoding="utf-8")
+    (out.parent / "headline.md").write_text(build_headline(root), encoding="utf-8")
     return out

@@ -88,7 +88,7 @@ def test_hashes_and_manifest(tmp_path):
     (tmp_path / "a.txt").write_bytes(b"abc")
     assert sha256(tmp_path / "a.txt") == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
     (tmp_path / "MANIFEST.json").write_text(json.dumps({"files": {"a.txt": sha256(tmp_path / "a.txt"),
-                                                                   "missing.txt": "0" * 64}}))
+                                                                   "missing.txt": "0" * 64}}), encoding="utf-8")
     assert verify_manifest(tmp_path / "MANIFEST.json") == {"a.txt": True, "missing.txt": False}
     (tmp_path / "a.txt").write_bytes(b"abd")
     assert verify_manifest(tmp_path / "MANIFEST.json")["a.txt"] is False

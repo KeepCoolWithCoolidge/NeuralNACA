@@ -50,7 +50,9 @@ def test_symmetric_joukowski_has_no_lift_at_zero_incidence():
     assert abs(C[0]) < 1e-12 and abs(C[2]) < 1e-12
 
 
-REF = json.loads((__import__("pathlib").Path(__file__).parent / "data" / "xfoil_inviscid.json").read_text())
+REF = json.loads(
+    (__import__("pathlib").Path(__file__).parent / "data" / "xfoil_inviscid.json").read_text(encoding="utf-8")
+)
 
 
 @pytest.mark.parametrize("code", sorted(REF["sections"]))

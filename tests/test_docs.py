@@ -22,7 +22,7 @@ def test_doctests(module):
 
 
 def python_blocks(page: Path) -> list[str]:
-    return re.findall(r"```python\n(.*?)```", page.read_text(), flags=re.S) if page.exists() else []
+    return re.findall(r"```python\n(.*?)```", page.read_text(encoding="utf-8"), flags=re.S) if page.exists() else []
 
 
 PAGES_WITH_CODE = [p for p in DOC_PAGES if python_blocks(p)]
@@ -44,7 +44,7 @@ def test_cli_reference_lists_every_command():
     from neuralnaca.cli import build_parser
 
     sub = next(a for a in build_parser()._actions if a.dest == "command")
-    text = (ROOT / "docs" / "reference" / "cli.md").read_text()
+    text = (ROOT / "docs" / "reference" / "cli.md").read_text(encoding="utf-8")
     for name in sub.choices:
         assert f"| `{name}` |" in text, name
 
@@ -54,18 +54,18 @@ def test_examples_run(script, tmp_path):
     if script == "compare_neuralfoil.py":
         pytest.importorskip("neuralfoil")
     out = subprocess.run([sys.executable, str(ROOT / "examples" / script)], cwd=tmp_path, capture_output=True,
-                         text=True, timeout=600)
+                         text=True, encoding="utf-8", timeout=600, env={**os.environ, "PYTHONUTF8": "1"})
     assert out.returncode == 0, out.stderr
 
 
 def test_plot_example_runs(tmp_path):
     pytest.importorskip("matplotlib")
-    env = {**os.environ, "MPLBACKEND": "Agg"}
+    env = {**os.environ, "MPLBACKEND": "Agg", "PYTHONUTF8": "1"}
     out = subprocess.run([sys.executable, str(ROOT / "examples" / "polar_plot.py"), "1e6"], cwd=tmp_path,
-                         capture_output=True, text=True, timeout=600, env=env)
+                         capture_output=True, text=True, encoding="utf-8", timeout=600, env=env)
     assert out.returncode == 0, out.stderr
     assert (tmp_path / "polars.png").exists()
 
 
 def test_training_example_compiles():
-    compile((ROOT / "examples" / "train_custom_model.py").read_text(), "train_custom_model.py", "exec")
+    compile((ROOT / "examples" / "train_custom_model.py").read_text(encoding="utf-8"), "train_custom_model.py", "exec")

@@ -37,22 +37,22 @@ def xfoil_inviscid(exe: str, code: str, panels: int) -> np.ndarray:
     co = naca4_coordinates(m, p, t)
     with tempfile.TemporaryDirectory() as d:
         foil, pol = os.path.join(d, "foil.dat"), os.path.join(d, "pol.txt")
-        Path(foil).write_text("foil\n" + "".join(f"{x:.7f} {y:.7f}\n" for x, y in co))
+        Path(foil).write_text("foil\n" + "".join(f"{x:.7f} {y:.7f}\n" for x, y in co), encoding="utf-8")
         cmds = ["PLOP", "G F", "", f"LOAD {foil}", "PPAR", f"N {panels}", "", "", "OPER", "PACC", pol, ""]
         cmds += [f"ALFA {a}" for a in ALPHAS] + ["PACC", "", "QUIT", ""]
         subprocess.run([exe], input="\n".join(cmds), text=True, capture_output=True, timeout=60, cwd=d, check=False)
-        return parse_polar_text(Path(pol).read_text())
+        return parse_polar_text(Path(pol).read_text(encoding="utf-8"))
 
 
 def polar_sample(exe: str) -> str:
     co = naca4_coordinates(0.02, 0.4, 0.12)
     with tempfile.TemporaryDirectory() as d:
         foil, pol = os.path.join(d, "foil.dat"), os.path.join(d, "pol.txt")
-        Path(foil).write_text("foil\n" + "".join(f"{x:.7f} {y:.7f}\n" for x, y in co))
+        Path(foil).write_text("foil\n" + "".join(f"{x:.7f} {y:.7f}\n" for x, y in co), encoding="utf-8")
         cmds = ["PLOP", "G F", "", f"LOAD {foil}", "PPAR", "N 279", "", "", "OPER", "VISC 1e6", "ITER 100",
                 "PACC", pol, "", "ALFA 0", "ALFA 2", "ALFA 4", "PACC", "", "QUIT", ""]
         subprocess.run([exe], input="\n".join(cmds), text=True, capture_output=True, timeout=60, cwd=d, check=False)
-        return Path(pol).read_text()
+        return Path(pol).read_text(encoding="utf-8")
 
 
 def main() -> None:
@@ -69,16 +69,16 @@ def main() -> None:
             r = xfoil_inviscid(a.xfoil, code, panels)
             inv["sections"][code][str(panels)] = {"alpha": r[:, 0].tolist(), "CL": r[:, 1].tolist(),
                                                   "CM": r[:, 4].tolist()}
-    (OUT / "xfoil_inviscid.json").write_text(json.dumps(inv, indent=1) + "\n")
+    (OUT / "xfoil_inviscid.json").write_text(json.dumps(inv, indent=1) + "\n", encoding="utf-8")
 
-    (OUT / "polar_sample.txt").write_text(polar_sample(a.xfoil))
+    (OUT / "polar_sample.txt").write_text(polar_sample(a.xfoil), encoding="utf-8")
 
     ds = XfoilDataset.load(HERE.parent / "data" / "xfoil" / "test_3000_s0_p279_nc9.npz")
     ok = ds.converged & (ds.points[:, 4] > -3) & (ds.points[:, 4] < 7) & (ds.points[:, 3] > 3e5)
     idx = np.where(ok)[0][:24]
     ref = {"description": "benign points of data/xfoil/test_3000_s0_p279_nc9.npz (cold start, 279 panels, n_crit 9)",
            "points": ds.points[idx].tolist(), "results": ds.results[idx].tolist()}
-    (OUT / "xfoil_viscous_reference.json").write_text(json.dumps(ref, indent=1) + "\n")
+    (OUT / "xfoil_viscous_reference.json").write_text(json.dumps(ref, indent=1) + "\n", encoding="utf-8")
     print("fixtures written to", OUT)
 
 

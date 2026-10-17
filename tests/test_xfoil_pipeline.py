@@ -72,7 +72,7 @@ def test_cli_generate_and_xfoil_check(tmp_path, capsys):
 
 def test_cli_bench_and_info(layout, capsys):
     assert main(["bench", "support", "--seeds", "0", "--root", str(layout.root)]) == 0
-    assert json.loads((layout.results / "support.json").read_text())["seeds"] == [0]
+    assert json.loads((layout.results / "support.json").read_text(encoding="utf-8"))["seeds"] == [0]
     capsys.readouterr()
     assert main(["info"]) == 0
     assert json.loads(capsys.readouterr().out)["xfoil"].startswith(("xfoil-python", "XFOIL"))

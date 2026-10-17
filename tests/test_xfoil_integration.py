@@ -13,7 +13,7 @@ from neuralnaca.xfoil import XfoilConfig, detect_xfoil, run_xfoil
 
 pytestmark = pytest.mark.xfoil
 
-REF = json.loads((Path(__file__).parent / "data" / "xfoil_viscous_reference.json").read_text())
+REF = json.loads((Path(__file__).parent / "data" / "xfoil_viscous_reference.json").read_text(encoding="utf-8"))
 
 
 def backends():

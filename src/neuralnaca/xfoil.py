@@ -280,7 +280,7 @@ def _binary_solver(pt: Sequence[float], cfg: XfoilConfig) -> tuple[float, float,
     co, chain, re, post = _prepare(pt, cfg)
     with tempfile.TemporaryDirectory() as d:
         foil, pol = os.path.join(d, "foil.dat"), os.path.join(d, "pol.txt")
-        with open(foil, "w") as f:
+        with open(foil, "w", encoding="utf-8") as f:
             f.write("foil\n" + "".join(f"{x:.7f} {y:.7f}\n" for x, y in co))
         cmds = ["PLOP", "G F", "", f"LOAD {foil}", "foil", "PPAR", f"N {cfg.panels}", "", "",
                 "OPER", f"VISC {re:.6e}", "MACH 0", "VPAR", f"N {cfg.n_crit}", "", f"ITER {cfg.max_iter}",
@@ -294,7 +294,7 @@ def _binary_solver(pt: Sequence[float], cfg: XfoilConfig) -> tuple[float, float,
             return NAN3
         if not os.path.exists(pol):
             return NAN3
-        with open(pol) as fh:
+        with open(pol, encoding="utf-8") as fh:
             rows = parse_polar_text(fh.read())
     target = round(chain[-1], 4)
     hit = rows[np.abs(rows[:, 0] - target) < 2e-3] if len(rows) else rows

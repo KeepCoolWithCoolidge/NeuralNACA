@@ -29,7 +29,7 @@ def grid(n=40):
 
 
 def test_parse_real_polar_file():
-    rows = parse_polar_text((DATA / "polar_sample.txt").read_text())
+    rows = parse_polar_text((DATA / "polar_sample.txt").read_text(encoding="utf-8"))
     assert rows.shape == (3, 5)
     np.testing.assert_allclose(rows[:, 0], [0.0, 2.0, 4.0])
     np.testing.assert_allclose(rows[2, [1, 2, 4]], [0.7168, 0.00702, -0.0566])
@@ -143,7 +143,7 @@ def test_binary_solver_runs_the_expected_keystrokes(monkeypatch, tmp_path):
         pol = lines[lines.index("PACC") + 1]
         rows = "".join(f"  {float(l.split()[1]):7.3f}   0.5000   0.01000   0.00500  -0.0500\n"
                        for l in lines if l.startswith("ALFA"))
-        Path(pol).write_text("header\n" + rows)
+        Path(pol).write_text("header\n" + rows, encoding="utf-8")
 
     monkeypatch.setattr(xf.subprocess, "run", fake_run)
     cfg = XfoilConfig(backend="binary", executable="xfoil", protocol="nf-sweep")
@@ -157,7 +157,8 @@ def test_binary_solver_runs_the_expected_keystrokes(monkeypatch, tmp_path):
 def test_binary_solver_reports_unconverged_target(monkeypatch):
     def fake_run(cmd, input, **kw):
         lines = input.splitlines()
-        Path(lines[lines.index("PACC") + 1]).write_text("   2.300   0.5  0.01  0.005  -0.05\n")   # target missing
+        Path(lines[lines.index("PACC") + 1]).write_text(
+            "   2.300   0.5  0.01  0.005  -0.05\n", encoding="utf-8")   # target missing
 
     monkeypatch.setattr(xf.subprocess, "run", fake_run)
     cfg = XfoilConfig(backend="binary", executable="xfoil", protocol="nf-sweep")

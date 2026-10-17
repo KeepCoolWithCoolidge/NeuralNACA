@@ -169,7 +169,7 @@ def _nf_predictions(points: np.ndarray, sizes: Sequence[str]) -> dict[str, np.nd
 
 def _write(obj: dict, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(obj, indent=1, sort_keys=False, default=_json_default) + "\n")
+    path.write_text(json.dumps(obj, indent=1, sort_keys=False, default=_json_default) + "\n", encoding="utf-8")
 
 
 def _json_default(o):
@@ -281,7 +281,7 @@ def run_ablation(seed: int, variants: Sequence[str] = ABLATION_VARIANTS, layout:
     assert np.array_equal(te.points[ok], ref["points"])
     e_nf = np.abs(ref[f"nf_{PRIMARY_NF}"] - y)
     out_path = layout.results / f"ablation_s{seed}.json"
-    res: dict = (json.loads(out_path.read_text()) if out_path.exists()
+    res: dict = (json.loads(out_path.read_text(encoding="utf-8")) if out_path.exists()
                  else {"kind": "ablation", "seed": seed, "runs": {}})
     # physics alone (panel-method CL/CM, flat-plate drag prior), no learning: what the network adds on top of it
     from .model import make_inputs
@@ -336,7 +336,7 @@ def run_curve(seed: int, sizes: Sequence[int] = (512, 1024, 2048, 4096), layout:
     assert np.array_equal(te.points[ok], ref["points"])
     e_nf = np.abs(ref[f"nf_{PRIMARY_NF}"] - y)
     out_path = layout.results / f"curve_s{seed}.json"
-    res: dict = (json.loads(out_path.read_text()) if out_path.exists()
+    res: dict = (json.loads(out_path.read_text(encoding="utf-8")) if out_path.exists()
                  else {"kind": "curve", "seed": seed, "runs": {}})
     from .domain import sample_points
 
@@ -401,7 +401,7 @@ def run_protocol_study(seed: int = 0, layout: Layout = Layout(), spec: Benchmark
     under *all* definitions. XFOIL-vs-XFOIL differences between definitions are reported as well: they bound how
     precisely any surrogate can be said to "match XFOIL".
     """
-    ref = json.loads((layout.results / f"main_s{seed}.json").read_text())
+    ref = json.loads((layout.results / f"main_s{seed}.json").read_text(encoding="utf-8"))
     te0 = XfoilDataset.load(layout.data / ref["datasets"]["test"]["file"])
     base = spec.xfoil
     truths = {}
@@ -483,10 +483,10 @@ def reproduce(level: int = 0, seeds: Sequence[int] | None = None, layout: Layout
     if not seeds:
         raise FileNotFoundError(f"no reference results in {layout.results}")
     var_path = layout.results / "variance_s0.json"
-    var = json.loads(var_path.read_text())["summary"] if var_path.exists() else None
+    var = json.loads(var_path.read_text(encoding="utf-8"))["summary"] if var_path.exists() else None
     report: dict = {"level": level, "seeds": {}, "environment": environment_info()}
     for seed in seeds:
-        ref = json.loads((layout.results / f"main_s{seed}.json").read_text())
+        ref = json.loads((layout.results / f"main_s{seed}.json").read_text(encoding="utf-8"))
         rm = ref["comparison"]["metrics"]["model"]
         row: dict = {}
         if level == 0:
@@ -609,7 +609,7 @@ def run_support_study(seeds: Sequence[int], layout: Layout = Layout(), n_airfoil
 
     rows = {}
     for seed in seeds:
-        ref = json.loads((layout.results / f"main_s{seed}.json").read_text())
+        ref = json.loads((layout.results / f"main_s{seed}.json").read_text(encoding="utf-8"))
         tr = XfoilDataset.load(layout.data / ref["datasets"]["train"]["file"])
         te = XfoilDataset.load(layout.data / ref["datasets"]["test"]["file"])
         net, _ = load_model(layout.models / ref["model"]["file"])
@@ -686,7 +686,7 @@ def run_polar_reference(layout: Layout = Layout(), workers: int | None = None) -
 # ------------------------------------------------------------------------------------------------ speed
 def _cpu_name() -> str:
     try:
-        for line in Path("/proc/cpuinfo").read_text().splitlines():
+        for line in Path("/proc/cpuinfo").read_text(encoding="utf-8").splitlines():
             if line.startswith("model name"):
                 return line.split(":", 1)[1].strip()
     except OSError:

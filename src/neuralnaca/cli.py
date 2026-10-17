@@ -163,7 +163,7 @@ def cmd_evaluate(a) -> int:
     comp = compare(_predict(net, te), nf, te.targets(), te.points[te.converged])
     print(format_comparison(comp))
     if a.out:
-        Path(a.out).write_text(json.dumps(comp, indent=1))
+        Path(a.out).write_text(json.dumps(comp, indent=1), encoding="utf-8")
     return 0
 
 
@@ -204,7 +204,7 @@ def cmd_reproduce(a) -> int:
     rep = b.reproduce(a.level, _seeds(a.seeds) if a.seeds else None, b.Layout(Path(a.root)), out, a.workers)
     print(format_reproduction(rep))
     if a.json:
-        Path(a.json).write_text(json.dumps(rep, indent=1, default=str))
+        Path(a.json).write_text(json.dumps(rep, indent=1, default=str), encoding="utf-8")
     return 0 if rep["passed"] else 1
 
 

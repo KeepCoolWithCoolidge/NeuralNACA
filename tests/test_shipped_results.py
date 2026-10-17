@@ -25,7 +25,7 @@ SEEDS = [int(p.stem.split("_s")[1]) for p in MAINS if p.stem.count("_") == 1]
 
 
 def main(seed):
-    return json.loads((LAYOUT.results / f"main_s{seed}.json").read_text())
+    return json.loads((LAYOUT.results / f"main_s{seed}.json").read_text(encoding="utf-8"))
 
 
 def test_manifest_checksums():
@@ -130,15 +130,15 @@ def test_reproduce_level0_all_replications():
 def test_generated_tables_are_up_to_date():
     from neuralnaca.report import build_headline, build_report
 
-    assert (ROOT / "docs" / "results" / "tables.md").read_text() == build_report(ROOT), \
+    assert (ROOT / "docs" / "results" / "tables.md").read_text(encoding="utf-8") == build_report(ROOT), \
         "run `neuralnaca report` to regenerate docs/results/tables.md"
-    assert (ROOT / "docs" / "results" / "headline.md").read_text() == build_headline(ROOT)
+    assert (ROOT / "docs" / "results" / "headline.md").read_text(encoding="utf-8") == build_headline(ROOT)
 
 
 def test_headline_numbers_in_readme_match_the_results():
     """Every pooled MAE ratio and interval quoted in the README is the one computed from the shipped results."""
     s = summarize_mains(LAYOUT.results)
-    readme = (ROOT / "README.md").read_text()
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
     for c in COLUMNS:
         r, lo, hi = s["pooled_mae_ratio"][c]
         assert f"{r:.2f} [{lo:.2f}, {hi:.2f}]" in readme, c
@@ -149,12 +149,12 @@ def test_headline_numbers_in_readme_match_the_results():
 
 def test_no_unexplained_numbers_in_docs():
     """Ratios written in the prose pages (x.xx [y.yy, z.zz]) must appear in the generated tables."""
-    tables = (ROOT / "docs" / "results" / "tables.md").read_text()
+    tables = (ROOT / "docs" / "results" / "tables.md").read_text(encoding="utf-8")
     pattern = re.compile(r"\d\.\d\d \[\d\.\d\d, \d\.\d\d\]")
     for page in [*(ROOT / "docs").rglob("*.md"), ROOT / "README.md"]:
         if page.name == "tables.md":
             continue
-        for hit in pattern.findall(page.read_text()):
+        for hit in pattern.findall(page.read_text(encoding="utf-8")):
             assert hit in tables, (page.name, hit)
 
 

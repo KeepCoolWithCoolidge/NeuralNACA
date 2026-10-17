@@ -165,6 +165,6 @@ def sha256(path: str | Path) -> str:
 def verify_manifest(manifest: str | Path) -> dict[str, bool]:
     """Check the SHA-256 of every file listed in a manifest (paths relative to the manifest's directory)."""
     manifest = Path(manifest)
-    entries = json.loads(manifest.read_text())["files"]
+    entries = json.loads(manifest.read_text(encoding="utf-8"))["files"]
     return {rel: (manifest.parent / rel).exists() and sha256(manifest.parent / rel) == digest
             for rel, digest in entries.items()}

@@ -77,7 +77,7 @@ def fig_curve(root: Path, out: Path) -> Path | None:
     plt = _style()
     rows: dict[int, list] = {}
     for p in sorted((Path(root) / "benchmarks" / "results").glob("curve_s*.json")):
-        for k, r in json.loads(p.read_text())["runs"].items():
+        for k, r in json.loads(p.read_text(encoding="utf-8"))["runs"].items():
             rows.setdefault(int(k), []).append(r)
     if not rows:
         return None
@@ -125,7 +125,7 @@ def fig_ablation(root: Path, out: Path) -> Path | None:
     plt = _style()
     runs: dict[str, list] = {}
     for p in sorted((Path(root) / "benchmarks" / "results").glob("ablation_s*.json")):
-        for k, r in json.loads(p.read_text())["runs"].items():
+        for k, r in json.loads(p.read_text(encoding="utf-8"))["runs"].items():
             runs.setdefault(k, []).append(r)
     order = [k for k in ("plain", "no_panel", "no_symmetry", "no_drag_prior", "full+residuals", "full") if k in runs]
     if not order:

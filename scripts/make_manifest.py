@@ -24,7 +24,7 @@ def main() -> None:
             files[Path("..", p.relative_to(ROOT)).as_posix()] = sha256(p)
     out = BENCH / "MANIFEST.json"
     out.write_text(json.dumps({"description": "SHA-256 of every shipped file; paths are relative to this file",
-                               "files": files}, indent=1) + "\n")
+                               "files": files}, indent=1) + "\n", encoding="utf-8")
     print(f"wrote {out} ({len(files)} files)")
 
 

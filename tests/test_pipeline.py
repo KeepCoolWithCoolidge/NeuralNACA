@@ -40,7 +40,7 @@ def layout(tmp_path_factory):
 
 
 def test_main_results_are_complete(layout):
-    r = json.loads((layout.results / "main_s0.json").read_text())
+    r = json.loads((layout.results / "main_s0.json").read_text(encoding="utf-8"))
     assert r["leakage_test_airfoils_in_train"] == 0
     assert r["reflection_check"]["ok"]
     assert r["datasets"]["test"]["n"] == SPEC.n_test

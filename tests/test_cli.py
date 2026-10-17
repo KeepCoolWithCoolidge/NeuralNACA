@@ -72,7 +72,7 @@ def test_train_and_evaluate_commands(tmp_path, capsys):
     assert main(["evaluate", "--weights", str(tmp_path / "m.npz"), "--data", str(tmp_path / "te.npz"),
                  "--neuralfoil", "", "--out", str(tmp_path / "e.json")]) == 0
     assert "40 XFOIL-converged test points" in capsys.readouterr().out
-    assert json.loads((tmp_path / "e.json").read_text())["n_test"] == 40
+    assert json.loads((tmp_path / "e.json").read_text(encoding="utf-8"))["n_test"] == 40
 
 
 def test_report_and_reproduce_commands(tmp_path, capsys, repo_root):
